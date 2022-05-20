@@ -1,0 +1,59 @@
+Tests given by the tutorial:
+4+5;
+def foo(a b) a*a + 2*a*b + b*b;
+def bar(a) foo(a, 4.0) + bar(31337);
+extern cos(x);
+
+Each of these commands give output matching what the tutorial shows.
+
+My own code is as follows:
+def star(b k) b + k*4 - b*b;
+def tiger(b k) k-b-k*b+k*k;
+extern testextern(x y);
+8417 * 47123;
+21831 - 2013 * 3012 + 482;
+def together(b k) star(b, k) + tiger(k, b);
+extern sin(x);
+
+with output:
+
+define double @star(double %b, double %k) {
+entry:
+  %multmp = fmul double %k, 4.000000e+00
+  %addtmp = fadd double %b, %multmp
+  %multmp1 = fmul double %b, %b
+  %subtmp = fsub double %addtmp, %multmp1
+  ret double %subtmp
+}
+
+define double @tiger(double %b, double %k) {
+entry:
+  %subtmp = fsub double %k, %b
+  %multmp = fmul double %k, %b
+  %subtmp1 = fsub double %subtmp, %multmp
+  %multmp2 = fmul double %k, %k
+  %addtmp = fadd double %subtmp1, %multmp2
+  ret double %addtmp
+}
+
+declare double @testextern(double, double)
+
+define double @__anon_expr() {
+entry:
+  ret double 0x41B7A428B3000000
+}
+
+define double @__anon_expr() {
+entry:
+  ret double 0xC1570B42C0000000
+}
+
+declare double @sin(double)
+
+The generated output for each of these looks correct. 
+The only confusing ones are the anonymous expressions, but if you put them thru an online double
+converter you will get:
+3.96634291E8
+and
+-6.040843E6
+which is the correct answer for each. 
